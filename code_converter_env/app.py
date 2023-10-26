@@ -6,7 +6,7 @@ import openai
 app = Flask(__name__)
 
 # Set your OpenAI GPT-3.5 API key
-api_key = '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'
+api_key = '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'
 
 @app.route('/')
 def index():
