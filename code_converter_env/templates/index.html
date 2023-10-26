@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Converter</title>
+</head>
+<Style>
+    body{
+        padding: 0px 20px ;
+        background-color: lightgray;
+    }
+   #code{
+    height: 500px;
+    width: 500px;
+   }
+   h1{
+    text-align: center;
+   }
+   .lang{
+    /* margin-top: 2%; */
+    font-size: 30px;
+    /* margin-left: 700px; */
+    margin-bottom: 20px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+    
+   }
+   .container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+   }
+   #codeOptions{
+    border: 1px solid gray;
+    height: 80vh;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+   }
+   .input_code > textarea{
+    height: 80vh;
+    width: 50%;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+   }
+   .input_code{
+    padding: 10px;
+    box-sizing: border-box;
+    height: 80vh;
+    width: 50%;
+    border: 1px solid gray;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+   }
+   #convertButton,#language{
+      padding: 5px 20px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+   }
+
+</Style>
+<body>
+    <h1 >Code Converter</h1>
+
+    <!-- Language selection dropdown -->
+    <div class="lang">
+        <div>
+    <label for="language">Select a language: </label>
+    <select id="language">
+        <option value="Python">Python</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="Java">Java</option>
+        <option value="c++">C++</option>
+        <option value="c">C</option>
+        <option value="php">php</option>
+        <!-- Add more language options here -->
+    </select>
+</div>
+    <button id="convertButton">Convert Code</button>
+</div>
+
+    <!-- Input box for code -->
+    <div class="container">
+    <div class="input_code">
+    <h3 class="" for="code">Enter code to convert: </h3>
+    <textarea id="code" rows="4" cols="50"></textarea>
+     </div>
+    
+
+    <!-- Display converted code options -->
+    <div id="codeOptions"></div>
+</div>
+    <script>
+        document.getElementById('convertButton').addEventListener('click', function () {
+            // Get the selected language and code from the inputs
+            var selectedLanguage = document.getElementById('language').value;
+            var codeToConvert = document.getElementById('code').value;
+
+            // Send a POST request to the Flask API
+            fetch('/convert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ language: selectedLanguage, code: codeToConvert })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the code options on the webpage
+                document.getElementById('codeOptions').innerText = data.code_options;
+            })
+            .catch(error => console.error(error));
+        });
+    </script>
+</body>
+</html>
